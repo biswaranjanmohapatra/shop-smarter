@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { formatCurrency } from '@/lib/utils';
 
 export default function Cart() {
   const { items, updateQuantity, removeFromCart, subtotal, loading } = useCart();
@@ -86,7 +87,7 @@ export default function Cart() {
                         {item.product.name}
                       </h3>
                       <p className="text-lg font-bold text-primary mt-1">
-                        ${item.product.price.toFixed(2)}
+                        {formatCurrency(item.product.price)}
                       </p>
 
                       {/* Quantity Controls */}
@@ -134,7 +135,7 @@ export default function Cart() {
                   <div className="space-y-3 text-sm">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Subtotal</span>
-                      <span className="font-medium">${subtotal.toFixed(2)}</span>
+                      <span className="font-medium">{formatCurrency(subtotal)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Shipping</span>
@@ -142,7 +143,7 @@ export default function Cart() {
                     </div>
                     <div className="border-t border-border pt-3 flex justify-between">
                       <span className="font-bold text-foreground">Total</span>
-                      <span className="font-bold text-foreground">${total.toFixed(2)}</span>
+                      <span className="font-bold text-foreground">{formatCurrency(total)}</span>
                     </div>
                   </div>
 

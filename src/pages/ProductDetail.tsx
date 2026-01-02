@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/utils';
 
 interface Product {
   id: string;
@@ -150,11 +151,11 @@ export default function ProductDetail() {
               {/* Price */}
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-2xl font-bold text-foreground">
-                  ${product.price.toFixed(2)}
+                  {formatCurrency(product.price)}
                 </span>
                 {product.original_price && product.original_price > product.price && (
                   <span className="text-lg text-muted-foreground line-through">
-                    ${product.original_price.toFixed(2)}
+                    {formatCurrency(product.original_price)}
                   </span>
                 )}
               </div>
@@ -196,7 +197,7 @@ export default function ProductDetail() {
                 className="w-full md:w-auto"
                 onClick={handleAddToCart}
               >
-                Add to Cart - ${(product.price * quantity).toFixed(2)}
+                Add to Cart - {formatCurrency(product.price * quantity)}
               </Button>
 
               {/* Stock Info */}

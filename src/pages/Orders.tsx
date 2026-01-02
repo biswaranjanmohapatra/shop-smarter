@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { formatCurrency } from '@/lib/utils';
 
 interface Order {
   id: string;
@@ -129,7 +130,7 @@ export default function Orders() {
                     </div>
                     <div className="text-right">
                       <p className="text-lg font-bold text-foreground">
-                        ${order.total.toFixed(2)}
+                        {formatCurrency(order.total)}
                       </p>
                     </div>
                   </div>

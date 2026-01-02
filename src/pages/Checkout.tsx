@@ -9,6 +9,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/utils';
 
 export default function Checkout() {
   const { items, subtotal, clearCart } = useCart();
@@ -230,7 +231,7 @@ export default function Checkout() {
                       {item.product.name} × {item.quantity}
                     </span>
                     <span className="font-medium">
-                      ${(item.product.price * item.quantity).toFixed(2)}
+                      {formatCurrency(item.product.price * item.quantity)}
                     </span>
                   </div>
                 ))}
@@ -238,7 +239,7 @@ export default function Checkout() {
                 <div className="border-t border-border pt-3 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span className="font-medium">${subtotal.toFixed(2)}</span>
+                    <span className="font-medium">{formatCurrency(subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Shipping</span>
@@ -246,7 +247,7 @@ export default function Checkout() {
                   </div>
                   <div className="flex justify-between pt-2 border-t border-border">
                     <span className="font-bold text-foreground">Total</span>
-                    <span className="font-bold text-foreground">${total.toFixed(2)}</span>
+                    <span className="font-bold text-foreground">{formatCurrency(total)}</span>
                   </div>
                 </div>
               </div>

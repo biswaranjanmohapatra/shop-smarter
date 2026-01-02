@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
+import { formatCurrency } from '@/lib/utils';
 
 interface ProductCardProps {
   product: {
@@ -84,11 +85,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Price */}
         <div className="flex items-center gap-2">
           <span className="text-sm font-bold text-foreground">
-            ${product.price.toFixed(2)}
+            {formatCurrency(product.price)}
           </span>
           {product.original_price && product.original_price > product.price && (
             <span className="text-xs text-muted-foreground line-through">
-              ${product.original_price.toFixed(2)}
+              {formatCurrency(product.original_price)}
             </span>
           )}
         </div>
