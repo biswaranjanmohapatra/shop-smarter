@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import ProductCard from '@/components/products/ProductCard';
 import { Button } from '@/components/ui/button';
 import {
@@ -212,6 +213,8 @@ export default function Products() {
           )}
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
