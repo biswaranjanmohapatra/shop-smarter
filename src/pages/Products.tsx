@@ -1,9 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/layout/Header';
 import ProductCard from '@/components/products/ProductCard';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface Product {
   id: string;
@@ -17,12 +24,15 @@ interface Product {
   rating: number | null;
   review_count: number | null;
   category_id: string | null;
+  created_at?: string;
 }
 
 interface Category {
   id: string;
   name: string;
 }
+
+type SortOption = 'newest' | 'price-low' | 'price-high' | 'rating';
 
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -32,10 +42,26 @@ export default function Products() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     searchParams.get('category')
   );
+  const [sortOption, setSortOption] = useState<SortOption>('newest');
 
   const searchQuery = searchParams.get('search') || '';
   const isFeatured = searchParams.get('featured') === 'true';
   const isNew = searchParams.get('new') === 'true';
+
+  const sortedProducts = useMemo(() => {
+    const sorted = [...products];
+    switch (sortOption) {
+      case 'price-low':
+        return sorted.sort((a, b) => a.price - b.price);
+      case 'price-high':
+        return sorted.sort((a, b) => b.price - a.price);
+      case 'rating':
+        return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      case 'newest':
+      default:
+        return sorted;
+    }
+  }, [products, sortOption]);
 
   // Sync selectedCategory with URL params when navigating via header links
   useEffect(() => {
@@ -115,11 +141,24 @@ export default function Products() {
       <main className="py-8 md:py-12">
         <div className="container">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">{getTitle()}</h1>
-            <p className="text-muted-foreground mt-2">
-              {products.length} {products.length === 1 ? 'product' : 'products'} found
-            </p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground">{getTitle()}</h1>
+              <p className="text-muted-foreground mt-2">
+                {products.length} {products.length === 1 ? 'product' : 'products'} found
+              </p>
+            </div>
+            <Select value={sortOption} onValueChange={(value: SortOption) => setSortOption(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="newest">Newest</SelectItem>
+                <SelectItem value="price-low">Price: Low to High</SelectItem>
+                <SelectItem value="price-high">Price: High to Low</SelectItem>
+                <SelectItem value="rating">Highest Rated</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Category Filters */}
@@ -160,7 +199,7 @@ export default function Products() {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {products.map((product, index) => (
+              {sortedProducts.map((product, index) => (
                 <div
                   key={product.id}
                   className="animate-slide-up"
