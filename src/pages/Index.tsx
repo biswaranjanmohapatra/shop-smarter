@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import ProductCard from '@/components/products/ProductCard';
 import CategoryCard from '@/components/products/CategoryCard';
 
@@ -176,27 +177,7 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="border-t border-border py-8">
-          <div className="container">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-muted-foreground">
-                © 2024 SHOP SMART. All rights reserved.
-              </p>
-              <div className="flex items-center gap-6">
-                <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground">
-                  Shop
-                </Link>
-                <Link to="/cart" className="text-sm text-muted-foreground hover:text-foreground">
-                  Cart
-                </Link>
-                <Link to="/orders" className="text-sm text-muted-foreground hover:text-foreground">
-                  Orders
-                </Link>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </main>
     </div>
   );
