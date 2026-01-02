@@ -173,7 +173,6 @@ export default function Checkout() {
                     value={formData.address}
                     onChange={handleChange}
                     required
-                    placeholder="123 Main Street"
                     className="mt-1"
                   />
                 </div>
@@ -187,7 +186,6 @@ export default function Checkout() {
                       value={formData.city}
                       onChange={handleChange}
                       required
-                      placeholder="New York"
                       className="mt-1"
                     />
                   </div>
@@ -199,7 +197,6 @@ export default function Checkout() {
                       value={formData.postalCode}
                       onChange={handleChange}
                       required
-                      placeholder="10001"
                       className="mt-1"
                     />
                   </div>
@@ -213,7 +210,6 @@ export default function Checkout() {
                     value={formData.country}
                     onChange={handleChange}
                     required
-                    placeholder="United States"
                     className="mt-1"
                   />
                 </div>
