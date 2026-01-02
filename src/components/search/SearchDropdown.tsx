@@ -100,6 +100,9 @@ export default function SearchDropdown({ onClose }: SearchDropdownProps) {
                 src={product.image_url || '/placeholder.svg'}
                 alt={product.name}
                 className="w-10 h-10 rounded object-cover bg-muted"
+                onError={(e) => {
+                  e.currentTarget.src = '/placeholder.svg';
+                }}
               />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-foreground truncate">{product.name}</p>

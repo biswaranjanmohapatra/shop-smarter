@@ -35,6 +35,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           src={product.image_url || '/placeholder.svg'}
           alt={product.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          onError={(e) => {
+            e.currentTarget.src = '/placeholder.svg';
+          }}
         />
         
         {/* Badges */}
