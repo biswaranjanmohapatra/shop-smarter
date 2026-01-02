@@ -37,6 +37,11 @@ export default function Products() {
   const isFeatured = searchParams.get('featured') === 'true';
   const isNew = searchParams.get('new') === 'true';
 
+  // Sync selectedCategory with URL params when navigating via header links
+  useEffect(() => {
+    setSelectedCategory(searchParams.get('category'));
+  }, [searchParams]);
+
   useEffect(() => {
     const fetchCategories = async () => {
       const { data } = await supabase.from('categories').select('id, name');
